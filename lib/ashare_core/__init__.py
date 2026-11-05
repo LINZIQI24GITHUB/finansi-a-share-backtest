@@ -6,4 +6,4 @@
 3. 所有落盘数据都要带 source / fetched_at，便于换源后重建与追溯。
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
