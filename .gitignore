@@ -1,0 +1,11 @@
+# Local caches and generated files
+data/*.csv
+data/*.parquet
+out/
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+*.log
+.DS_Store
