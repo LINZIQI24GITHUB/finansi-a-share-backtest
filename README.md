@@ -14,7 +14,7 @@ A股日频回测，内置真实交易约束，避免“信号当天收盘价买�
 ## 安装
 
 ```bash
-git clone https://github.com/LINZIQI24GITHUB/a-share-backtest.git
+git clone https://github.com/LINZIQI24GITHUB/finansi-a-share-backtest.git
 ```
 
 把目录放到 Agent 的 skills 目录：
@@ -30,7 +30,7 @@ Windows 示例：
 
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.agents\skills" | Out-Null
-git clone https://github.com/LINZIQI24GITHUB/a-share-backtest.git "$HOME\.agents\skills\a-share-backtest"
+git clone https://github.com/LINZIQI24GITHUB/finansi-a-share-backtest.git "$HOME\.agents\skills\a-share-backtest"
 ```
 
 依赖：
