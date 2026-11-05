@@ -99,7 +99,8 @@ def main() -> None:
     ap.add_argument("--cash", type=float, default=100_000.0)
     ap.add_argument("--all", action="store_true", help="跑全部内置策略并排序")
     ap.add_argument("--refresh", action="store_true", help="强制重新取数")
-    ap.add_argument("--out", default=None, help="权益曲线 CSV 输出路径")
+    ap.add_argument("--out", default=None, help="权益曲线 CSV 输出路径；同目录自动生成同名 PNG")
+    ap.add_argument("--no-chart", action="store_true", help="只输出文字/CSV，不生成 PNG")
     args = ap.parse_args()
 
     df, code = load_data(args)
@@ -150,6 +151,14 @@ def _dump(m: dict, code: str, args) -> None:
         for d, v, p in zip(res.equity.index, res.equity.values, res.position.values):
             w.writerow([d, f"{v:.2f}", int(p)])
     print(f"\n  权益曲线 → {out}")
+
+    if not getattr(args, "no_chart", False):
+        try:
+            import chart
+            png = chart.plot_equity(m, code, out.with_suffix(".png"))
+            print(f"  回测图表 → {png}")
+        except Exception as exc:  # keep the text report usable if plotting is unavailable
+            print(f"  图表生成失败（文字/CSV 不受影响）：{exc}")
 
 
 if __name__ == "__main__":

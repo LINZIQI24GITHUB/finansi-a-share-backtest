@@ -53,7 +53,7 @@ python scripts/run_backtest.py --data data/600519.csv --strategy bollinger --par
 python scripts/run_backtest.py --code 600519 --strategy ma_cross --cash 200000
 ```
 
-产出：终端中文报告 + `out/<代码>_<策略>_equity.csv`（逐日权益与仓位，可直接画净值曲线）。
+产出：终端中文报告 + `out/<代码>_<策略>_equity.csv` + `out/<代码>_<策略>_equity.png`（权益曲线、回撤、绩效表、风险提示）。不想出图加 `--no-chart`。
 
 ## 内置策略
 

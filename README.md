@@ -45,7 +45,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Python 3.11+；依赖 pandas、numpy、requests。不需要 API key。
+Python 3.11+；依赖 pandas、numpy、requests、matplotlib。不需要 API key。
 
 ## 快速开始
 
@@ -63,7 +63,21 @@ python scripts/run_backtest.py --code 600519 --start 2024-01-01 --end 2025-12-31
 python scripts/run_backtest.py --data data/600519.csv --strategy bollinger --params n=20,k=2
 ```
 
-输出：终端中文报告 + `out/<code>_<strategy>_equity.csv`。
+输出：终端中文报告 + `out/<code>_<strategy>_equity.csv` + `out/<code>_<strategy>_equity.png`。
+
+PNG 包含：
+
+- 权益曲线
+- 回撤曲线
+- 总收益、年化、夏普、最大回撤、胜率、盈亏比、费用占比
+- 涨跌停/停牌/资金不足导致未成交的统计
+- 风险提示
+
+只要文字和 CSV：
+
+```bash
+python scripts/run_backtest.py --code 600519 --strategy ma_cross --no-chart
+```
 
 ## 在 Agent 里调用
 
