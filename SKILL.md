@@ -53,7 +53,11 @@ python scripts/run_backtest.py --data data/600519.csv --strategy bollinger --par
 python scripts/run_backtest.py --code 600519 --strategy ma_cross --cash 200000
 ```
 
-产出：终端中文报告 + `out/<代码>_<策略>_equity.csv` + `out/<代码>_<策略>_equity.png`（权益曲线、回撤、绩效表、风险提示）。不想出图加 `--no-chart`。
+产出：终端中文报告 + `out/<代码>_<策略>_equity.csv` + **`out/<代码>_<策略>_equity.png`**（权益曲线、回撤、绩效表、风险提示）。
+
+> **这张图是必出项，不是可选项。** 每次回测都必须以 PNG 收尾；只有文字、没有图，视为没跑完。
+> matplotlib 缺失或绘图报错时，脚本会以退出码 `2` 结束并提示 `pip install -r requirements.txt`，
+> 而不是悄悄降级成纯文字。确实只要文字/CSV（调试）时，才显式加 `--no-chart`。
 
 ## 内置策略
 

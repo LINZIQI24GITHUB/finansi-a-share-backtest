@@ -157,8 +157,12 @@ def _dump(m: dict, code: str, args) -> None:
             import chart
             png = chart.plot_equity(m, code, out.with_suffix(".png"))
             print(f"  回测图表 → {png}")
-        except Exception as exc:  # keep the text report usable if plotting is unavailable
-            print(f"  图表生成失败（文字/CSV 不受影响）：{exc}")
+        except Exception as exc:  # 图是交付物，不能静默降级
+            print(f"\n⚠ 图表未生成：{type(exc).__name__}: {exc}")
+            print("  图表是本技能的必需产出，不是可选项。")
+            print("  先 pip install -r requirements.txt（含 matplotlib）再重跑；")
+            print("  确实只要文字/CSV 请显式加 --no-chart。")
+            raise SystemExit(2)
 
 
 if __name__ == "__main__":
