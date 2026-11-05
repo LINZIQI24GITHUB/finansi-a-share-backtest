@@ -13,10 +13,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r requirements.txt pillow
       - name: Compile Python sources
-        run: python -m compileall -q scripts
+        run: python -m compileall -q lib scripts
       - name: Check skill entry
         run: |
           test -f SKILL.md
           grep -q '^name: a-share-backtest$' SKILL.md
           test -f requirements.txt
+          test -f lib/ashare_core/engine.py
+      - name: Chart self-check
+        run: python scripts/check_chart.py
