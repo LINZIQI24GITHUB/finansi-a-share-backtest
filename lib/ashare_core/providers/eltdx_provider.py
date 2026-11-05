@@ -133,6 +133,26 @@ class EltdxProvider(DataProvider):
             })
         return pd.DataFrame(rows, columns=schema.STOCK_COLUMNS)
 
+    def profile(self, code: str) -> dict:
+        """单只证券的简称与品类。
+
+        `latest_stock_list()` 只含 A 股，ETF / LOF 不在里面；这里走行情快照表兜底，
+        返回 {'code', 'name', 'category'}，拿不到就返回空 name。
+        """
+        try:
+            table = self._c().helpers.stock_profile_table([full_code(code)])
+        except Exception as exc:  # noqa: BLE001
+            raise ProviderError(f"取 {code} 简称失败：{type(exc).__name__}: {exc}") from exc
+        rows = getattr(table, "rows", table) or []
+        if not rows:
+            return {"code": bare_code(code), "name": "", "category": ""}
+        row = rows[0]
+        return {
+            "code": bare_code(getattr(row, "code", code)),
+            "name": (getattr(row, "name", "") or "").strip(),
+            "category": (getattr(row, "category", "") or "").strip(),
+        }
+
     # ── 涨跌停 ────────────────────────────────────────────────────
     def limits(self, codes: Sequence[str], trade_date: str) -> pd.DataFrame:
         try:

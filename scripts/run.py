@@ -142,7 +142,7 @@ def remember_name(code: str, name: str) -> None:
 
 
 def lookup_name(code: str) -> str:
-    """只在要画图时才查股票名，查不到就返回空串（图里只显示代码）。"""
+    """查证券简称：先看缓存，再查股票清单，最后用行情快照表兜底（ETF / LOF 不在股票清单里）。"""
     code = str(code).zfill(6)
     try:
         path = _names_path()
@@ -154,15 +154,19 @@ def lookup_name(code: str) -> str:
         pass
     try:
         with EltdxProvider() as p:
-            lst = p.stock_list()
-        hit = lst[lst["code"] == code]
-        if len(hit):
-            name = str(hit.iloc[0]["name"])
-            remember_name(code, name)
-            return name
+            try:
+                lst = p.stock_list()
+                hit = lst[lst["code"] == code]
+                name = str(hit.iloc[0]["name"]) if len(hit) else ""
+            except Exception:  # noqa: BLE001
+                name = ""
+            if not name:
+                name = p.profile(code).get("name", "")
     except Exception:  # noqa: BLE001
-        pass
-    return ""
+        name = ""
+    if name:
+        remember_name(code, name)
+    return name
 
 
 def run_one(code: str, start: str, end: str, signal: str | None = None,
