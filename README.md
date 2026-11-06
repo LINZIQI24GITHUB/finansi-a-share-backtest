@@ -1,5 +1,7 @@
 # 一句话回测A股
 
+**Skill ID：** `finansi-a-share-backtest`
+
 **一句话回测A股**：你只需要说“用 300750 跑 2024–2025 双均线回测”，Agent 就会取数、执行、输出中文报告和权益图。
 
 把「成交假设」和「复权口径」当真的 A 股日频回测。
@@ -106,18 +108,18 @@ python scripts/check_chart.py    # 制图 17 项断言（含像素级校验：li
 ## 安装到 Agent
 
 ```text
-Claude Code   ~/.claude/skills/a-share-backtest/
-Codex         ~/.codex/skills/a-share-backtest/
-Cursor        ~/.cursor/skills/a-share-backtest/
-通用           ~/.agents/skills/a-share-backtest/
+Claude Code   ~/.claude/skills/finansi-a-share-backtest/
+Codex         ~/.codex/skills/finansi-a-share-backtest/
+Cursor        ~/.cursor/skills/finansi-a-share-backtest/
+通用           ~/.agents/skills/finansi-a-share-backtest/
 ```
 
 Windows：
 
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.agents\skills" | Out-Null
-git clone https://github.com/LINZIQI24GITHUB/finansi-a-share-backtest.git "$HOME\.agents\skills\a-share-backtest"
-cd "$HOME\.agents\skills\a-share-backtest"
+git clone https://github.com/LINZIQI24GITHUB/finansi-a-share-backtest.git "$HOME\.agents\skills\finansi-a-share-backtest"
+cd "$HOME\.agents\skills\finansi-a-share-backtest"
 pip install -r requirements.txt
 ```
 
