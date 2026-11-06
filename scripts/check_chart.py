@@ -116,7 +116,8 @@ probe = (
     "m={'total_return':.05,'cagr':.05,'max_dd':-.05,'volatility':.2,'sharpe':.5,"
     "'win_rate':.5,'payoff':1.2,'trades':2};"
     f"print(chart.render(r'{TMP / 'none.png'}', eq, m))")
-r = subprocess.run([sys.executable, "-c", probe], capture_output=True, text=True)
+r = subprocess.run([sys.executable, "-c", probe], capture_output=True, text=True,
+                   encoding="utf-8", errors="replace")
 expect("无 matplotlib 时返回 None 且不抛异常",
        r.stdout.strip() == "None" and not (TMP / "none.png").exists(),
        r.stdout.strip() or r.stderr.strip()[:60])
@@ -138,7 +139,8 @@ c = subprocess.run([sys.executable, str(SKILL_DIR / "scripts" / "run.py"), "run"
                     "--code", "300750", "--start", "2024-01-01", "--end", "2025-12-31",
                     "--signal", "ma_cross", "--params", "fast=5,slow=20",
                     "--cash", "100000", "--json", "--plot", str(cli_png)],
-                   capture_output=True, text=True, env=env, cwd=SKILL_DIR)
+                   capture_output=True, text=True, env=env, cwd=SKILL_DIR,
+                   encoding="utf-8", errors="replace")
 if c.returncode != 0 or not c.stdout.strip().startswith("{"):
     skip("CLI --json --plot 串联", (c.stderr or c.stdout).strip().splitlines()[-1][:70])
 else:
