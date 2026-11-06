@@ -20,7 +20,7 @@ jobs:
       - name: Check skill entry
         run: |
           test -f SKILL.md
-          grep -q '^name: a-share-backtest$' SKILL.md
+          grep -q '^name: finansi-a-share-backtest$' SKILL.md
           test -f requirements.txt
           test -f lib/ashare_core/engine.py
       - name: Chart self-check
